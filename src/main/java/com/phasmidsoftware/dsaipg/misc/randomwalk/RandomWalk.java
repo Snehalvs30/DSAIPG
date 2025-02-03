@@ -1,101 +1,89 @@
-/*
- * Copyright (c) 2017-2024. Robin Hillyard
- */
-
 package com.phasmidsoftware.dsaipg.misc.randomwalk;
-
+ 
 import java.util.Random;
-
-/**
- * The RandomWalk class simulates a two-dimensional random walk. A "drunkard"
- * moves in a random direction for a specified number of steps, and the distance
- * from the starting point is measured. Additionally, multiple random walk
- * experiments can be performed to compute average distances.
- */
+ 
 public class RandomWalk {
-
+ 
+    private int x = 0; // Current x-coordinate
+    private int y = 0; // Current y-coordinate
+    private final Random random = new Random();
+ 
     /**
-     * Method to compute the distance from the origin (the lamp-post where the drunkard starts) to his current position.
+     * Method to compute the Euclidean distance from the origin.
      *
-     * @return the (Euclidean) distance from the origin to the current position.
+     * @return the distance from the origin to the current position.
      */
     public double distance() {
-        // TO BE IMPLEMENTED 
-         return 0.0;
-        // END SOLUTION
+        // Handling overflow situations: return the Euclidean distance
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
-
+ 
     /**
-     * Private method to move the current position, that's to say the drunkard moves
+     * Method to move the position based on dx and dy.
      *
-     * @param dx the distance he moves in the x direction
-     * @param dy the distance he moves in the y direction
+     * @param dx the change in the x-direction
+     * @param dy the change in the y-direction
      */
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED  do move
-         throw new RuntimeException("Not implemented");
-        // END SOLUTION
+        x += dx;
+        y += dy;
     }
-
+ 
     /**
-     * Perform a random walk of m steps
-     *
-     * @param m the number of steps the drunkard takes
-     */
-    private void randomWalk(int m) {
-        // TO BE IMPLEMENTED 
-throw new RuntimeException("implementation missing");
-    }
-
-    /**
-     * Private method to generate a random move according to the rules of the situation.
-     * That's to say, moves can be (+-1, 0) or (0, +-1).
+     * Perform a single random move (North, South, East, or West).
      */
     private void randomMove() {
-        boolean ns = random.nextBoolean();
-        int step = random.nextBoolean() ? 1 : -1;
-        move(ns ? step : 0, ns ? 0 : step);
+        boolean ns = random.nextBoolean(); // Choose North-South or East-West
+        int step = random.nextBoolean() ? 1 : -1; // Positive or negative step
+        move(ns ? step : 0, ns ? 0 : step); // Update position
     }
-
-    private int x = 0;
-    private int y = 0;
-
-    private final Random random = new Random();
-
+ 
     /**
-     * Perform multiple random walk experiments, returning the mean distance.
+     * Perform a random walk of m steps.
      *
-     * @param m the number of steps for each experiment
-     * @param n the number of experiments to run
-     * @return the mean distance
+     * @param m the number of steps to take
+     */
+    private void randomWalk(int m) {
+        for (int i = 0; i < m; i++) {
+            randomMove();
+        }
+    }
+ 
+    /**
+     * Perform multiple random walk experiments and compute the mean distance.
+     * @param m the number of steps in each experiment
+     * @param n the number of experiments to perform
+     * @return the mean distance over n experiments
      */
     public static double randomWalkMulti(int m, int n) {
         double totalDistance = 0;
         for (int i = 0; i < n; i++) {
             RandomWalk walk = new RandomWalk();
             walk.randomWalk(m);
-            totalDistance = totalDistance + walk.distance();
+            totalDistance += walk.distance();
         }
         return totalDistance / n;
     }
-
+ 
     /**
-     * The main method serves as the entry point to the RandomWalk program. It performs
-     * either a single random walk experiment or several experiments, based on the
-     * provided input arguments, and prints the mean distance.
+     * Main method to run experiments for various values of m and generate results.
      *
-     * @param args command-line arguments where:
-     *             args[0] specifies the number of steps for a random walk (required),
-     *             and args[1] optionally specifies the number of experiments (default is 30).
-     *             If args is empty, the method throws a RuntimeException indicating invalid syntax.
+     * @param args command-line arguments
      */
     public static void main(String[] args) {
-        if (args.length == 0)
-            throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+        int[] stepsArray = {10, 50, 100, 200, 500, 1000}; // Values of m
+        int experiments = 10; // n = 10 random walks
+        double[] observedDistances = new double[stepsArray.length];
+        double[] theoreticalDistances = new double[stepsArray.length];
+ 
+        System.out.println("Steps\tObserved Mean Distance");
+ 
+        for (int i = 0; i < stepsArray.length; i++) {
+            int m = stepsArray[i];
+            double meanDistance = randomWalkMulti(m, experiments); // Run 10 experiments for each m
+            observedDistances[i] = meanDistance;
+            theoreticalDistances[i] = Math.sqrt(m);
+            System.out.printf("%d\t%.4f\t\t\t%n", m, meanDistance);
+        }
     }
 }
