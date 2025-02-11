@@ -1,0 +1,20 @@
+2025-02-10 14:12:56.983 INFO  Benchmark_Timer - Begin run: Zero Iterations Test with 0 runs
+2025-02-10 14:12:56.987 INFO  Benchmark_Timer - Begin run: Full Pipeline Test with 10 runs
+2025-02-10 14:12:56.989 INFO  Benchmark_Timer - Begin run: testWaitPeriods with 2 runs
+2025-02-10 14:12:57.151 INFO  Benchmark_Timer - Begin run: With Postprocessing Test with 10 runs
+2025-02-10 14:12:57.152 INFO  Benchmark_Timer - Begin run: With Preprocessing Test with 10 runs
+2025-02-10 14:12:57.153 INFO  Benchmark_Timer - Begin run: Basic Test with 10 runs
+2025-02-10 20:26:13.108 INFO  Benchmark_Timer - Begin run: Zero Iterations Test with 0 runs
+2025-02-10 20:26:13.111 INFO  Benchmark_Timer - Begin run: Full Pipeline Test with 10 runs
+2025-02-10 20:26:13.111 INFO  Benchmark_Timer - Begin run: testWaitPeriods with 2 runs
+2025-02-10 20:26:13.656 INFO  Benchmark_Timer - Begin run: With Postprocessing Test with 10 runs
+2025-02-10 20:26:13.657 INFO  Benchmark_Timer - Begin run: With Preprocessing Test with 10 runs
+2025-02-10 20:26:13.657 INFO  Benchmark_Timer - Begin run: Basic Test with 10 runs
+2025-02-10 20:39:11.148 INFO  Benchmark_Timer - Begin run: InsertionSort with 10 runs
+2025-02-10 20:39:38.610 INFO  Benchmark_Timer - Begin run: InsertionSort with 10 runs
+2025-02-10 20:48:36.874 INFO  Benchmark_Timer - Begin run: Zero Iterations Test with 0 runs
+2025-02-10 20:48:36.885 INFO  Benchmark_Timer - Begin run: Full Pipeline Test with 10 runs
+2025-02-10 20:48:36.886 INFO  Benchmark_Timer - Begin run: testWaitPeriods with 2 runs
+2025-02-10 20:48:37.433 INFO  Benchmark_Timer - Begin run: With Postprocessing Test with 10 runs
+2025-02-10 20:48:37.434 INFO  Benchmark_Timer - Begin run: With Preprocessing Test with 10 runs
+2025-02-10 20:48:37.435 INFO  Benchmark_Timer - Begin run: Basic Test with 10 runs
