@@ -39,16 +39,28 @@ final class ParSort {
      * @param to    the ending index (exclusive) of the portion of the array to be sorted
      */
     public static void sort(int[] array, int from, int to) {
-        if (to - from >= cutoff) {
-            CompletableFuture<int[]> completableFuture1 = null;
-            CompletableFuture<int[]> completableFuture2 = null;
-            // TO BE IMPLEMENTED 
-            // END SOLUTION
-            CompletableFuture<int[]> completableFuture = completableFuture1.thenCombine(completableFuture2, ParSort::doMerge);
-            completableFuture.whenComplete((result, throwable) -> System.arraycopy(result, 0, array, from, result.length));
-            completableFuture.join();
-        } else
-            Arrays.sort(array, from, to);
+        if (to - from <= cutoff) {
+            Arrays.sort(array, from, to); // Use system sort for small partitions.
+            return;
+        }
+
+        int mid = from + (to - from) / 2;
+
+        // Sort left and right halves concurrently.
+        CompletableFuture<int[]> leftFuture = asyncSort(array, from, mid);
+        CompletableFuture<int[]> rightFuture = asyncSort(array, mid, to);
+
+        // Merge the sorted halves
+        CompletableFuture<int[]> mergedFuture = leftFuture.thenCombine(rightFuture, ParSort::doMerge);
+
+        // Copy the merged result back into the original array
+        mergedFuture.whenComplete((result, throwable) -> {
+            if (throwable == null) {
+                System.arraycopy(result, 0, array, from, result.length);
+            }
+        });
+
+        mergedFuture.join();  // Wait for sorting and merging to complete.
     }
 
     /**
@@ -64,6 +76,7 @@ final class ParSort {
     static int[] sortRecursive(int[] array, int from, int to) {
         int[] result = new int[to - from];
         // TO BE IMPLEMENTED 
+        Arrays.sort(result);
          // NOTE you need to do something here so that result is the sorted version of array.
         // END SOLUTION
         return result;

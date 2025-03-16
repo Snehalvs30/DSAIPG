@@ -74,13 +74,14 @@ public class Main {
         return result;
     }
 
-    private static void processCommand(String x, String y) {
-        if (x.equalsIgnoreCase("N")) setConfig(x, Integer.parseInt(y));
-        else
-            // TODO sort this out
-            if (x.equalsIgnoreCase("P")) //noinspection ResultOfMethodCallIgnored
-                ForkJoinPool.getCommonPoolParallelism();
+    private static void processCommand(String key, String value) {
+        if (key.equalsIgnoreCase("-N")) {
+            configuration.put("N", Integer.parseInt(value));
+        } else if (key.equalsIgnoreCase("-P")) {
+            System.out.println("Parallelism: " + Runtime.getRuntime().availableProcessors());
+        }
     }
+
 
     private static void setConfig(String x, int i) {
         configuration.put(x, i);
